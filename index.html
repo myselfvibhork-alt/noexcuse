@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<!--
+NOEXCUSE - Home Fitness & Nutrition Coach
+Copyright (c) 2026 Vibhor Kumar
+Licensed under the MIT License: free to use, copy, modify, merge, publish, distribute,
+sublicense and sell, provided this notice is kept. Provided "AS IS", without warranty of any kind.
+General wellness guidance only, not medical advice.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ff5a1f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<title>NOEXCUSE – Home Fitness & Nutrition Coach</title>
+<style>
+:root{--bg:#f6f4f1;--card:#fff;--ink:#1d1d1f;--mut:#6b6b73;--acc:#ff5a1f;--acc2:#ffe8de;--ok:#1f9d55;--warn:#e8a200;--bad:#d64545;--line:#e8e4df;--r:16px}
+@media (prefers-color-scheme:dark){:root{--bg:#121214;--card:#1c1c20;--ink:#f2f2f3;--mut:#9a9aa5;--acc2:#3a2219;--line:#2c2c32}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:15px;line-height:1.4}
+#app{max-width:520px;margin:0 auto;min-height:100vh;padding:0 14px 96px}
+header.top{display:flex;align-items:center;justify-content:space-between;padding:16px 2px 8px}
+.logo{font-weight:900;letter-spacing:1px;font-size:22px}.logo span{color:var(--acc)}
+.date{color:var(--mut);font-size:13px}
+.gear{background:none;border:0;font-size:22px;cursor:pointer;color:var(--ink)}
+.card{background:var(--card);border-radius:var(--r);padding:14px;margin:10px 0;border:1px solid var(--line)}
+.card h2,.card h3{margin:0 0 8px}
+h2{font-size:18px}h3{font-size:16px}
+.mut{color:var(--mut)}.small{font-size:12.5px}
+.row{display:flex;align-items:center;gap:10px}.between{justify-content:space-between}.wrap{flex-wrap:wrap}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+button,.btn{font:inherit;border:0;border-radius:12px;padding:10px 14px;cursor:pointer;background:var(--acc);color:#fff;font-weight:700;text-decoration:none;display:inline-block;text-align:center}
+button.sec,.btn.sec{background:var(--acc2);color:var(--acc)}
+button.ghost,.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--ink);font-weight:600}
+button.sm,.btn.sm{padding:6px 10px;font-size:13px;border-radius:10px}
+button.full{width:100%}
+.pill{border:1.5px solid var(--line);background:var(--card);color:var(--ink);padding:9px 12px;border-radius:999px;font-weight:600;font-size:14px}
+.pill.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.pill.rec{border-color:var(--acc)}
+input,select{font:inherit;width:100%;padding:10px 12px;border-radius:12px;border:1.5px solid var(--line);background:var(--card);color:var(--ink)}
+input[type=checkbox]{width:20px;height:20px;accent-color:var(--acc);flex:none}
+label.f{display:block;font-size:13px;color:var(--mut);margin:8px 0 4px}
+.tabs{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--line);display:flex;justify-content:center;padding-bottom:env(safe-area-inset-bottom);z-index:20}
+.tabs>div{display:flex;max-width:520px;width:100%}
+.tabs button{flex:1;background:none;color:var(--mut);border-radius:0;padding:8px 2px 7px;font-size:11px;font-weight:600}
+.tabs button span{display:block;font-size:20px}
+.tabs button.on{color:var(--acc)}
+.rings{display:flex;justify-content:space-around;gap:8px}
+.ring{position:relative;width:128px;text-align:center}
+.ring svg{width:112px;height:112px}
+.rbg{fill:none;stroke:var(--line);stroke-width:8}.rfg{fill:none;stroke-width:8;stroke-linecap:round;transition:stroke-dasharray .4s}
+.rin{position:absolute;top:30px;left:0;right:0;display:flex;flex-direction:column;line-height:1.1}
+.rin b{font-size:20px}.rin span{font-size:11px;color:var(--mut)}
+.rl{font-size:13px;font-weight:700;margin-top:2px}
+.bar{height:10px;background:var(--line);border-radius:99px;overflow:hidden}.bar i{display:block;height:100%;background:var(--acc);border-radius:99px}
+.badge{display:inline-block;background:var(--acc2);color:var(--acc);border-radius:8px;padding:2px 8px;font-size:12px;font-weight:700;margin-right:4px}
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.day{border:1.5px solid var(--line);border-radius:12px;padding:6px 0;text-align:center;font-size:12px;background:var(--card);color:var(--ink);font-weight:600}
+.day b{display:block;font-size:16px;margin-top:2px}
+.day.plan{border-color:var(--acc)}.day.done{background:var(--ok);border-color:var(--ok);color:#fff}.day.miss{background:#fde7e7;border-color:var(--bad);color:var(--bad)}.day.now{outline:2px solid var(--ink);outline-offset:1px}
+.ex{border:1px solid var(--line);border-radius:14px;padding:10px 12px;margin:8px 0;background:var(--card)}
+.ex.done{opacity:.55}.ex.done .exn{text-decoration:line-through}
+.exn{font-weight:700}
+details summary{cursor:pointer;color:var(--acc);font-weight:600;font-size:13px;margin-top:4px}
+ol,ul{margin:6px 0;padding-left:20px}
+.phase{font-size:12px;font-weight:800;letter-spacing:1px;color:var(--mut);margin:14px 0 2px;text-transform:uppercase}
+.restbar{position:sticky;top:0;z-index:15;background:var(--ink);color:var(--bg);border-radius:12px;padding:10px 14px;margin:8px 0;display:none;justify-content:space-between;align-items:center;font-weight:700}
+.restbar.on{display:flex}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:84px;background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;z-index:50;max-width:88%;text-align:center;font-weight:600;box-shadow:0 6px 20px rgba(0,0,0,.25)}
+.seg{display:flex;background:var(--line);border-radius:12px;padding:3px;gap:3px}.seg button{flex:1;background:transparent;color:var(--ink);padding:8px}.seg button.on{background:var(--card);color:var(--acc)}
+.item{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--line)}.item:last-child{border:0}
+.addrow{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
+.addrow select{width:72px;padding:6px}
+.addrow .t{flex:1}.addrow small{display:block;color:var(--mut)}
+.neg{color:var(--ok)}
+.bars{display:flex;align-items:flex-end;gap:6px;height:110px;position:relative;margin-top:6px}
+.bars>div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%;align-items:center}
+.bars i{width:100%;border-radius:6px 6px 0 0;background:var(--acc);min-height:2px}
+.tline{position:absolute;left:0;right:0;border-top:2px dashed var(--mut);opacity:.6}
+.blab{display:flex;gap:6px;font-size:11px;color:var(--mut);text-align:center}.blab span{flex:1}
+.onb{padding-top:24px}.onb h1{font-size:30px;margin:0}
+.hero{background:linear-gradient(135deg,#ff5a1f,#ff8a3d);color:#fff;border:0}.hero .mut{color:#ffe8de}
+.hero button{background:#fff;color:var(--acc)}
+a{color:var(--acc)}
+.disc{font-size:11.5px;color:var(--mut);text-align:center;margin:18px 0}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="toastBox"></div>
+<script>
+(function(){
+"use strict";
+/* ============ helpers ============ */
+const KEY="noexcuse_v1";
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const pad=n=>String(n).padStart(2,"0");
+const dkey=d=>d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
+const parse=k=>{const a=k.split("-").map(Number);return new Date(a[0],a[1]-1,a[2])};
+const addDays=(k,n)=>{const d=parse(k);d.setDate(d.getDate()+n);return dkey(d)};
+const today=()=>dkey(new Date());
+const DN=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+const MN=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const nice=k=>{const d=parse(k);return DN[d.getDay()]+", "+d.getDate()+" "+MN[d.getMonth()]};
+const R=Math.round;
+const yt=q=>"https://www.youtube.com/results?search_query="+encodeURIComponent(q);
+const weekStart=k=>{const d=parse(k);const off=(d.getDay()+6)%7;return addDays(k,-off)};
+function toast(m){const b=$("#toastBox");b.innerHTML='<div class="toast">'+esc(m)+"</div>";clearTimeout(toast.t);toast.t=setTimeout(()=>{b.innerHTML=""},3200)}
+
+/* ============ state ============ */
+function defaults(){return{profile:null,level:1,points:0,tough:0,days:[1,3,5,6],over:{},workouts:{},food:{},weights:[],created:today()}}
+function load(){try{const s=JSON.parse(localStorage.getItem(KEY));if(s)return Object.assign(defaults(),s)}catch(e){}return defaults()}
+let S=load();
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+const T={tab:"today",chk:{wd:null,en:null,tm:30},rec:null,sess:null,meal:null,fd:null,coach:"crave",dish:null,cookLog:null,rest:null,cravQ:"",cookQ:"",cfg:false};
+function defMeal(){const h=new Date().getHours();return h<11?"Breakfast":h<16?"Lunch":h<19?"Snack":"Dinner"}
+
+/* ============ data: foods ============ */
+// [name, serving, kcal, protein g]  (approximate, typical Indian-home values)
+const FOODS=[
+["Roti / chapati","1 medium",100,3],["Cooked rice","1 cup (160 g)",200,4],["Dal (cooked)","1 katori (150 ml)",150,8],
+["Paneer","100 g",265,18],["Boiled egg","1 large",78,6],["Egg bhurji / omelette","2 eggs, 1 tsp oil",190,12],
+["Chicken breast (cooked)","100 g",165,31],["Soya chunks (cooked)","30 g dry",104,16],["Tofu","100 g",80,9],
+["Greek yogurt (plain)","150 g",100,15],["Curd (dahi)","1 katori (100 g)",60,3.5],["Chaas / buttermilk","1 glass (200 ml)",40,2],
+["Milk (toned)","1 glass (250 ml)",150,8],["Whey protein","1 scoop (30 g)",120,24],["Oats (cooked with water)","40 g dry",150,5],
+["Poha","1 plate (150 g)",250,5],["Idli","2 pieces",130,4],["Dosa (plain)","1 medium",130,3],["Sambar","1 katori",80,4],
+["Rajma (cooked)","1 katori",140,8],["Chana (boiled)","1/2 cup",135,7],["Moong sprouts","1 cup",31,3],
+["Peanuts","30 g",170,7.5],["Almonds","10 pieces",80,3],["Roasted makhana","30 g",105,3.5],["Roasted chana","40 g",150,8],
+["Banana","1 medium",105,1.3],["Apple","1 medium",95,0.5],["Papaya","1 cup",60,1],
+["Mixed veg sabzi","1 katori",90,3],["Salad (cucumber, tomato, onion)","1 bowl",35,1.5],
+["Maggi (as packed)","1 pack (70 g)",310,7],["Chai with milk & sugar","1 cup",70,2],["Biscuits (Marie)","2 pieces",50,1],
+["Samosa","1 piece",260,4],["Pizza (regular)","1 slice",285,12],["Veg burger (regular)","1 burger",400,12],["Cold drink","330 ml",140,0]
+];
+
+/* ============ data: exercises ============ */
+const EX=[
+// warm-up
+{id:"w1",n:"Easy walk in place",t:"warm",lv:[1,4],u:"s",v:[40,40,40,40],steps:["Stand tall, feet hip-width apart.","Walk on the spot, swinging your arms gently.","Slowly build your pace and breathe easily."]},
+{id:"w2",n:"Arm circles & shoulder rolls",t:"warm",lv:[1,4],u:"s",v:[30,30,30,30],steps:["Extend arms to the sides.","Make 10 small circles forward, then 10 backward.","Finish with 5 slow shoulder rolls."]},
+{id:"w3",n:"Hip circles & torso twists",t:"warm",lv:[1,4],u:"s",v:[30,30,30,30],steps:["Hands on hips, feet wider than shoulders.","Draw big slow circles with your hips, then switch direction.","Finish with gentle torso twists."]},
+// cardio
+{id:"walk",n:"Walking in place (brisk)",t:"cardio",lv:[1,4],u:"s",v:[45,60,75,90],low:1,steps:["Stand tall, core lightly tight.","Walk briskly on the spot, lifting knees comfortably.","Swing arms; keep a pace where you can still talk."]},
+{id:"march",n:"High-knee march",t:"cardio",lv:[1,4],u:"s",v:[30,40,50,60],low:1,steps:["Stand tall, hands in front at waist height.","Lift each knee towards your hands, one at a time.","Keep your chest up and move at a steady rhythm."]},
+{id:"box",n:"Shadow boxing",t:"cardio",lv:[1,4],u:"s",v:[30,40,50,60],low:1,steps:["Feet shoulder-width, knees slightly bent.","Throw alternating straight punches at chest height.","Bounce lightly on your toes; keep shoulders relaxed."]},
+{id:"stepjack",n:"Step jacks (low-impact jumping jacks)",t:"cardio",lv:[1,3],u:"r",v:[16,20,24,30],steps:["Start with feet together, arms down.","Step one foot out to the side as arms rise overhead.","Step back and alternate sides."]},
+{id:"kicks",n:"Butt kicks",t:"cardio",lv:[2,4],u:"s",v:[30,30,40,45],steps:["Stand tall with hands by your sides.","Jog on the spot, kicking heels up towards your glutes.","Stay light on your feet."]},
+{id:"jj",n:"Jumping jacks",t:"cardio",lv:[3,4],u:"r",v:[0,0,20,25],steps:["Feet together, arms down.","Jump feet out wide while raising arms overhead.","Jump back to start and repeat softly (land on the balls of your feet)."]},
+// lower
+{id:"chairsq",n:"Chair squats (sit-to-stand)",t:"lower",lv:[1,2],u:"r",v:[8,10,12,15],low:1,steps:["Stand in front of a sturdy chair, feet shoulder-width.","Push hips back and lower until you lightly touch the seat.","Press through heels to stand tall; squeeze glutes at the top."]},
+{id:"sq",n:"Bodyweight squats",t:"lower",lv:[2,4],u:"r",v:[8,10,12,15],steps:["Feet shoulder-width, toes slightly out.","Sit hips back and down, chest up, knees tracking over toes.","Go as low as comfortable, then push up through your heels."]},
+{id:"lunge",n:"Reverse lunges (alternating)",t:"lower",lv:[2,4],u:"r",ps:1,v:[6,6,8,10],steps:["Stand tall, hands on hips (hold a wall or chair if needed).","Step one foot back and lower until both knees are about 90°.","Push through the front heel to return; alternate legs."]},
+{id:"bridge",n:"Glute bridges",t:"lower",lv:[1,4],u:"r",v:[10,12,15,18],low:1,steps:["Lie on your back, knees bent, feet flat.","Press through heels and lift hips until shoulders-to-knees form a line.","Squeeze glutes for 1 second, lower slowly."]},
+{id:"calf",n:"Calf raises",t:"lower",lv:[1,3],u:"r",v:[12,15,18,20],low:1,steps:["Stand near a wall for balance.","Rise onto your toes as high as you can.","Lower slowly with control."]},
+{id:"wallsit",n:"Wall sit",t:"lower",lv:[2,4],u:"s",v:[15,20,25,35],steps:["Lean your back on a wall, feet a step forward.","Slide down until knees are around 90° (higher is fine).","Hold, breathe, and keep your back flat on the wall."]},
+// upper
+{id:"wallpu",n:"Wall push-ups",t:"upper",lv:[1,2],u:"r",v:[8,10,12,15],low:1,steps:["Stand an arm's length from a wall, palms on the wall at chest height.","Bend elbows and bring your chest towards the wall.","Push back to start; keep your body in a straight line."]},
+{id:"inclpu",n:"Incline push-ups (hands on table or sofa)",t:"upper",lv:[2,3],u:"r",v:[0,6,8,10],steps:["Place hands on a sturdy table or sofa edge, body in a straight line.","Lower your chest towards the surface.","Press back up without sagging your hips."]},
+{id:"kneepu",n:"Knee push-ups",t:"upper",lv:[3,4],u:"r",v:[0,0,6,8],steps:["Hands under shoulders, knees on the floor, body straight from knees to head.","Lower your chest towards the floor with elbows at about 45°.","Push back up."]},
+{id:"pushup",n:"Standard push-ups",t:"upper",lv:[4,4],u:"r",v:[0,0,0,8],steps:["High-plank position, hands under shoulders.","Lower as one straight line until chest is near the floor.","Press up; drop to your knees any time you need."]},
+{id:"dips",n:"Chair triceps dips",t:"upper",lv:[2,4],u:"r",v:[0,6,8,10],steps:["Sit on a sturdy chair edge, hands beside hips, feet flat.","Slide hips off the seat and bend elbows straight back.","Press up; keep hips close to the chair."]},
+{id:"super",n:"Superman hold",t:"upper",lv:[1,4],u:"s",v:[15,20,25,30],low:1,steps:["Lie face-down, arms extended forward.","Lift arms, chest and legs slightly off the floor.","Hold while breathing; look at the floor to protect your neck."]},
+// core
+{id:"deadbug",n:"Dead bug",t:"core",lv:[1,4],u:"r",ps:1,v:[6,8,10,12],low:1,steps:["Lie on your back, arms up, knees bent over hips.","Slowly lower the opposite arm and leg towards the floor.","Keep your lower back pressed down; return and switch sides."]},
+{id:"birddog",n:"Bird dog",t:"core",lv:[1,4],u:"r",ps:1,v:[6,8,10,12],low:1,steps:["On hands and knees, back flat.","Extend one arm and the opposite leg; hold 2 seconds.","Return slowly and switch sides without twisting the hips."]},
+{id:"kneeelbow",n:"Standing knee-to-elbow crunch",t:"core",lv:[1,3],u:"r",ps:1,v:[10,12,15,18],low:1,steps:["Stand tall with hands behind your head.","Lift one knee while bringing the opposite elbow towards it.","Return and alternate sides."]},
+{id:"kneeplank",n:"Knee plank hold",t:"core",lv:[1,2],u:"s",v:[15,20,25,30],steps:["Forearms on the floor, knees down, body straight from knees to head.","Tighten abs and glutes.","Hold and breathe; do not let hips sag."]},
+{id:"plank",n:"Forearm plank hold",t:"core",lv:[3,4],u:"s",v:[0,0,20,30],steps:["Forearms on the floor, legs extended, body in a straight line.","Brace your abs and squeeze your glutes.","Hold steadily; stop if your lower back aches."]},
+{id:"bicycle",n:"Bicycle crunch",t:"core",lv:[3,4],u:"r",ps:1,v:[0,0,10,12],steps:["Lie on your back, hands lightly behind head.","Bring one knee in while rotating the opposite elbow towards it.","Alternate in a slow pedalling motion."]},
+{id:"mclimb",n:"Slow mountain climbers",t:"core",lv:[3,4],u:"s",v:[0,0,20,30],steps:["Start in a high plank.","Drive one knee towards your chest, then switch.","Keep hips low and the pace controlled."]},
+// cool-down
+{id:"c1",n:"Hamstring stretch",t:"cool",lv:[1,4],u:"s",ps:1,v:[30,30,30,30],steps:["Place one heel forward, toes up.","Hinge at the hips with a flat back until you feel a stretch behind the thigh.","Breathe slowly; do not bounce."]},
+{id:"c2",n:"Standing quad stretch",t:"cool",lv:[1,4],u:"s",ps:1,v:[30,30,30,30],steps:["Hold a wall for balance.","Bend one knee and hold your ankle behind you.","Keep knees together and hips tucked."]},
+{id:"c3",n:"Chest opener stretch",t:"cool",lv:[1,4],u:"s",v:[30,30,30,30],steps:["Clasp your hands behind your back.","Straighten arms and lift slightly while opening your chest.","Keep shoulders relaxed away from your ears."]},
+{id:"c4",n:"Child's pose",t:"cool",lv:[1,4],u:"s",v:[40,40,40,40],steps:["Kneel and sit back on your heels.","Reach arms forward and rest your forehead down.","Breathe deeply into your back."]},
+{id:"c5",n:"Slow deep breathing",t:"cool",lv:[1,4],u:"s",v:[60,60,60,60],steps:["Sit or stand comfortably.","Inhale through your nose for 4 counts, exhale for 6.","Let your heart rate come down."]}
+];
+const LEVELS=["Starter","Mover","Builder","Challenger"];
+const exById=id=>EX.find(e=>e.id===id);
+
+/* ============ data: cravings ============ */
+const CRAVE=[
+{id:"pizza",k:["pizza"],title:"Pizza",reg:"2 restaurant slices ≈ 570 kcal, 24 g protein",opts:[
+ {n:"Roti-base paneer pizza",kcal:310,p:15,t:"15 min",why:"Whole-wheat base, homemade sauce and less cheese. More fibre, roughly half the calories.",ing:["1 whole-wheat roti","2 tbsp homemade tomato sauce (tomato, garlic, oregano)","30 g part-skim mozzarella, grated","30 g paneer, crumbled","Onion, capsicum, tomato, sweet corn"],steps:["Warm the roti on a tawa for 30 seconds per side.","Spread sauce, then add veggies, paneer and cheese.","Cover and cook on low for 3–4 minutes until the cheese melts (or air-fry at 180°C for 4 minutes).","Finish with oregano and chilli flakes."]},
+ {n:"Brown-bread mini pizzas",kcal:280,p:13,t:"10 min",why:"Fast, crunchy, portion-controlled. Two slices are a full meal when paired with a salad.",ing:["2 slices brown bread","2 tbsp tomato sauce","30 g low-fat mozzarella","Chopped veggies, oregano"],steps:["Toast bread lightly.","Top with sauce, veggies and cheese.","Grill or air-fry 3–4 minutes until bubbly."]}]},
+{id:"burger",k:["burger"],title:"Burger",reg:"Fast-food burger ≈ 550 kcal, 25 g protein",opts:[
+ {n:"Grilled chicken burger (whole-wheat bun)",kcal:345,p:36,t:"20 min",why:"Lean grilled chicken, curd-mint sauce instead of mayo. Very high protein.",ing:["1 whole-wheat bun","100 g chicken breast, flattened","2 tbsp curd + mint sauce","Lettuce, tomato, onion rings","1/2 tsp oil, pepper, garlic"],steps:["Marinate chicken with garlic, pepper, salt and a little curd for 10 minutes.","Grill or pan-sear with 1/2 tsp oil, 4–5 min per side.","Toast the bun, spread curd-mint sauce, stack with veggies and chicken."]},
+ {n:"Chickpea-oat patty burger (veg)",kcal:360,p:14,t:"25 min",why:"Fibre-rich veg patty baked or shallow-pan cooked instead of deep fried.",ing:["1 whole-wheat bun","1/2 cup boiled chickpeas, mashed","1 tbsp oats, finely chopped onion, coriander, spices","Curd-mint sauce, tomato, cucumber"],steps:["Mash chickpeas with oats, onion, spices; shape into a patty.","Cook in a non-stick pan with a few drops of oil, 3–4 minutes per side.","Assemble in the toasted bun with sauce and veggies."]}]},
+{id:"choc",k:["chocolate","choco","sweet","sweets","sugar","dessert"],title:"Chocolate / sweet tooth",reg:"Chocolate bar (50 g) ≈ 270 kcal, 3 g protein",opts:[
+ {n:"Greek yogurt chocolate bowl",kcal:170,p:16,t:"3 min",why:"Creamy and chocolatey with a big protein hit.",ing:["150 g plain Greek yogurt","1 tsp cocoa powder","1 tsp honey","2 squares dark chocolate (70%+), chopped"],steps:["Stir cocoa and honey into the yogurt.","Top with chopped dark chocolate.","Chill for 10 minutes if you can wait."]}]},
+{id:"icecream",k:["ice cream","icecream","sweet","sweets","dessert","sugar"],title:"Ice cream",reg:"2 scoops ≈ 270 kcal, 4 g protein",opts:[
+ {n:"Frozen banana-cocoa ice cream",kcal:200,p:5,t:"5 min (+ frozen banana)",why:"Naturally sweet, creamy and made from just 3 ingredients.",ing:["1 banana, sliced and frozen overnight","1 tbsp peanut butter","1 tsp cocoa powder"],steps:["Blend frozen banana until crumbly.","Add peanut butter and cocoa; blend until soft-serve smooth.","Eat immediately."]}]},
+{id:"mithai",k:["gulab","jalebi","ladoo","laddu","halwa","mithai","kheer","sweet","sweets","dessert","sugar"],title:"Indian mithai",reg:"2 gulab jamun ≈ 300 kcal, 4 g protein",opts:[
+ {n:"Stuffed dates",kcal:120,p:2,t:"3 min",why:"Fibre-rich natural sweetness that satisfies a mithai craving in two bites.",ing:["2 dates, deseeded","2 almonds","Pinch of cardamom"],steps:["Stuff each date with an almond.","Dust with cardamom."]},
+ {n:"Oats kheer",kcal:225,p:9,t:"10 min",why:"Warm, comforting and protein-rich thanks to milk and oats.",ing:["30 g oats","150 ml toned milk","1 tsp jaggery powder","Cardamom, a few chopped nuts"],steps:["Simmer oats in milk for 5–6 minutes.","Add jaggery and cardamom at the end.","Top with nuts."]}]},
+{id:"cake",k:["cake","brownie","pastry","cupcake","sweet","sweets","dessert","sugar"],title:"Cake / brownie",reg:"Slice of chocolate cake ≈ 400 kcal, 5 g protein",opts:[
+ {n:"Banana-oat microwave mug cake",kcal:205,p:10,t:"4 min",why:"Single-serve so you do not eat the whole cake. Egg and oats add protein.",ing:["1/2 ripe banana, mashed","1 egg","20 g oats (powdered)","1 tsp cocoa","Pinch baking powder"],steps:["Mix everything in a mug.","Microwave 60–90 seconds until set.","Let it cool for a minute."]}]},
+{id:"chips",k:["chips","fries","french fries","wafer","wafers","namkeen","crisps"],title:"Chips / fries",reg:"Medium fries ≈ 365 kcal, 4 g protein",opts:[
+ {n:"Masala makhana",kcal:125,p:3.5,t:"5 min",why:"Crunchy, light and satisfying.",ing:["30 g makhana (fox nuts)","1/2 tsp ghee","Black pepper, chaat masala, a pinch of salt"],steps:["Roast makhana in ghee on low heat for 4–5 minutes until crisp.","Toss with spices."]},
+ {n:"Air-fried potato wedges",kcal:155,p:3,t:"25 min",why:"All the crunch for about 40% of the calories of fries.",ing:["1 medium potato","1 tsp oil","Paprika/chilli, garlic powder, salt"],steps:["Cut into wedges, toss with oil and spices.","Air-fry or oven-bake at 200°C for 18–20 minutes, turning once."]}]},
+{id:"samosa",k:["samosa","pakora","pakoda","fried","kachori","vada pav","bhajiya"],title:"Samosa / pakora / fried snacks",reg:"2 samosas ≈ 520 kcal, 8 g protein",opts:[
+ {n:"Moong dal veg chilla",kcal:230,p:13,t:"20 min (+ soaking)",why:"Crispy, savoury, pan-cooked and protein-rich.",ing:["1/4 cup moong dal, soaked 2–3 hours","Chopped onion, spinach, green chilli, coriander","1 tsp oil"],steps:["Grind dal to a thin batter and mix in veggies and spices.","Spread on a hot non-stick tawa; cook with a few drops of oil until golden on both sides.","Serve with mint chutney."]},
+ {n:"Tawa paneer tikka",kcal:275,p:15,t:"20 min",why:"Smoky and satisfying with far less oil than frying.",ing:["75 g paneer cubes","2 tbsp curd","Tikka masala, lemon, 1 tsp oil","Capsicum and onion chunks"],steps:["Marinate paneer and veggies in curd and spices for 15 minutes.","Cook on a hot tawa with 1 tsp oil until charred on the edges."]}]},
+{id:"biryani",k:["biryani","pulao","pulav"],title:"Biryani",reg:"Restaurant chicken biryani plate ≈ 650 kcal, 28 g protein",opts:[
+ {n:"Chicken veg biryani-style pulao",kcal:440,p:36,t:"35 min",why:"Same flavour, controlled rice portion, double the protein per calorie.",ing:["3/4 cup cooked rice (150 g)","100 g chicken breast","2 tbsp curd, biryani masala","Onion, tomato, carrot, peas","1 tsp oil"],steps:["Marinate chicken in curd and biryani masala for 15 minutes.","Cook onion, tomato and chicken in 1 tsp oil until done.","Fold in rice and veggies; steam 5 minutes."]},
+ {n:"Soya veg pulao (veg)",kcal:370,p:24,t:"30 min",why:"Soya chunks give a biryani-like bite with high protein.",ing:["3/4 cup cooked rice","30 g soya chunks, soaked and squeezed","Mixed veg, whole spices","1 tsp oil"],steps:["Sauté whole spices, onion and soya in 1 tsp oil.","Add veggies and rice; mix and steam for 5 minutes."]}]},
+{id:"pasta",k:["pasta","noodles","spaghetti","mac"],title:"Pasta",reg:"Creamy white-sauce pasta ≈ 650 kcal, 18 g protein",opts:[
+ {n:"Whole-wheat veggie pasta with paneer",kcal:400,p:17,t:"20 min",why:"Tomato-based instead of cream-based, loaded with veggies.",ing:["60 g whole-wheat pasta (dry)","1/2 cup tomato puree","30 g paneer cubes","Broccoli, capsicum, mushrooms, garlic","1 tsp olive oil"],steps:["Boil pasta until al dente.","Sauté garlic and veggies in 1 tsp oil, add puree and herbs.","Toss with pasta and paneer."]}]},
+{id:"cola",k:["cold drink","soda","coke","cola","pepsi","soft drink","fizzy"],title:"Cold drink / soda",reg:"330 ml cola ≈ 140 kcal, ~35 g sugar",opts:[
+ {n:"Lemon-mint sparkling soda",kcal:10,p:0,t:"2 min",why:"Fizz and freshness without sugar.",ing:["Chilled soda water","Juice of 1/2 lemon","Mint leaves, pinch of black salt","Ice"],steps:["Muddle mint with lemon and salt, add ice and top with soda."]},
+ {n:"Spiced chaas",kcal:40,p:2,t:"3 min",why:"Cooling, hydrating and gives a little protein.",ing:["1 glass thin buttermilk","Roasted cumin, mint, black salt"],steps:["Blend or whisk everything together; serve chilled."]}]}
+];
+
+/* ============ data: cooking assistant ============ */
+// add-ins: [name, kcal, protein, category]
+const DISHES=[
+{id:"maggi",k:["maggi","instant noodles","ramen","noodle"],name:"Maggi (instant noodles)",unit:"pack (70 g)",kcal:310,p:7,
+ add:[["1 egg (scramble or poach in the noodles)",72,6,"Protein"],["50 g paneer cubes",133,9,"Protein"],["30 g soya chunks (dry weight), soaked",104,16,"Protein"],["50 g tofu cubes",40,4.5,"Protein"],["1/2 cup boiled sprouts",40,3.5,"Protein"],["1 cup mixed veg (carrot, beans, capsicum)",50,2.5,"Veg & fibre"],["Handful of spinach",7,1,"Veg & fibre"]],
+ tips:["Use only half the tastemaker and add lemon, black pepper and chilli flakes to cut sodium.","Cook veggies first and add the noodles last so they stay firm.","Drain part of the water for a drier, less salty bowl."]},
+{id:"paneer",k:["paneer","sabzi","sabji","paneer sabzi"],name:"Paneer sabzi (regular, home-style)",unit:"bowl (150 g)",kcal:280,p:13,
+ add:[["30 g soya chunks (dry weight), soaked",104,16,"Protein"],["50 g tofu cubes",40,4.5,"Protein"],["1/4 cup green peas",30,2,"Veg & fibre"],["1 cup capsicum & onion",40,1.5,"Veg & fibre"],["1 cup palak (spinach), blended into the gravy",25,3,"Veg & fibre"],["Use 2 tbsp hung curd instead of cream",-60,2,"Swap"],["Cook in 1 tsp oil instead of 1 tbsp",-80,0,"Swap"]],
+ tips:["Blend onion-tomato gravy with a few soaked cashews or hung curd instead of cream.","Sauté paneer lightly on a non-stick pan instead of frying it.","Serve with roti, not with extra rice, to keep calories balanced."]},
+{id:"dal",k:["dal","daal","lentil"],name:"Dal (regular tadka dal)",unit:"katori (150 ml)",kcal:150,p:8,
+ add:[["2 tbsp extra moong dal (raw) cooked in",85,6,"Protein"],["1/2 cup lauki / carrot / tomato",25,1,"Veg & fibre"],["1 cup chopped spinach",7,1,"Veg & fibre"],["Serve with 1 katori curd",60,3.5,"Protein"],["1 tbsp roasted peanuts as topping",53,2.3,"Extra"],["1 tbsp flaxseed powder",37,1.3,"Extra"],["Tadka in 1 tsp ghee instead of 1 tbsp",-80,0,"Swap"]],
+ tips:["Mix 2–3 types of dal (toor + moong + masoor) for a better amino-acid profile.","Squeeze lemon at the end; vitamin C helps iron absorption.","Add a tomato and a pinch of hing for flavour with minimal calories."]},
+{id:"poha",k:["poha"],name:"Poha",unit:"plate (150 g)",kcal:250,p:5,
+ add:[["1 tbsp roasted peanuts",53,2.3,"Extra"],["1/2 cup boiled sprouts",40,3.5,"Protein"],["30 g crumbled paneer",80,5.4,"Protein"],["1 cup mixed veg (carrot, peas, beans)",50,2.5,"Veg & fibre"],["Side of 1 katori curd",60,3.5,"Protein"],["Use 1 tsp oil instead of 1 tbsp",-80,0,"Swap"]],
+ tips:["Wash poha briefly and do not soak it; it absorbs less oil.","Finish with lemon and coriander.","Add an egg bhurji on the side for a high-protein breakfast."]},
+{id:"paratha",k:["paratha","parantha"],name:"Aloo paratha (1 medium)",unit:"paratha",kcal:280,p:6,
+ add:[["Replace half the aloo with grated paneer + veg stuffing",30,5,"Protein"],["2 tbsp besan or soy flour in the dough",40,3,"Protein"],["Serve with 1 katori curd",60,3.5,"Protein"],["Cook with 1/2 tsp oil instead of 1 tsp ghee",-40,0,"Swap"]],
+ tips:["Add grated cabbage or spinach to the stuffing for fibre.","Cook on a medium flame so you need less oil.","Skip butter on top; curd and pickle add flavour for free."]},
+{id:"khichdi",k:["khichdi","khichri"],name:"Khichdi",unit:"bowl (250 g)",kcal:250,p:9,
+ add:[["1 cup mixed vegetables",50,2.5,"Veg & fibre"],["2 tbsp extra moong dal (raw)",85,6,"Protein"],["1/4 cup green peas",30,2,"Veg & fibre"],["Serve with 1 katori curd",60,3.5,"Protein"],["Tadka in 1 tsp ghee instead of 1 tbsp",-80,0,"Swap"]],
+ tips:["Use half rice, half dal, or swap some rice for millets (bajra, sama).","Pressure-cook with veggies for a one-pot complete meal."]},
+{id:"sandwich",k:["sandwich","sandwhich","toast"],name:"Veg sandwich (2 slices bread)",unit:"sandwich",kcal:250,p:8,
+ add:[["30 g paneer, grated",80,5.4,"Protein"],["1 egg (omelette filling)",72,6,"Protein"],["2 tbsp hung curd spread instead of mayo",-70,1,"Swap"],["Cucumber, tomato, onion, lettuce",20,1,"Veg & fibre"],["1/4 cup boiled sprouts",20,1.7,"Protein"],["Swap to whole-wheat / multigrain bread",0,1,"Swap"]],
+ tips:["Toast on a dry pan instead of using butter.","Mint chutney or hung curd adds flavour without extra fat."]},
+{id:"oats",k:["oats","porridge"],name:"Oats (40 g, cooked with water)",unit:"bowl",kcal:150,p:5,
+ add:[["150 ml toned milk (instead of water)",90,5,"Protein"],["1 scoop whey protein (after cooking)",120,24,"Protein"],["1 tbsp chia or flax seeds",50,2,"Extra"],["1/2 banana, sliced",52,0.7,"Veg & fibre"],["1 tsp peanut butter",32,1.3,"Extra"]],
+ tips:["Choose plain rolled oats instead of flavoured sachets (less added sugar).","Add cinnamon or cardamom for sweetness without sugar."]}
+];
+
+/* ============ calculations ============ */
+function calcTargets(p){
+ const bmr=10*p.kg+6.25*p.cm-5*p.age+(p.sex==="m"?5:-161);
+ const tdee=bmr*p.act;
+ const min=p.sex==="m"?1500:1200;
+ return{kcal:Math.max(min,R(tdee*0.82/10)*10),protein:Math.min(150,Math.max(50,R(p.kg*1.4)))};
+}
+function totals(k){const l=S.food[k]||[];let c=0,p=0;l.forEach(x=>{c+=x.kcal;p+=x.p});return{c:R(c),p:R(p*10)/10}}
+function planned(k){const o=S.over[k];if(o==="add")return true;if(o==="off")return false;return S.days.indexOf(parse(k).getDay())>=0}
+function setPlanned(k,on){const base=S.days.indexOf(parse(k).getDay())>=0;if(on===base)delete S.over[k];else S.over[k]=on?"add":"off"}
+function missed(){const out=[];const t=today();let from=S.created;const lim=addDays(t,-10);if(from<lim)from=lim;for(let k=from;k<t;k=addDays(k,1)){if(planned(k)&&!S.workouts[k])out.push(k)}return out}
+function nextFree(){const t=today();for(let i=1;i<=14;i++){const k=addDays(t,i);if(!planned(k)&&!S.workouts[k])return k}return addDays(t,1)}
+function weekDone(ws){let n=0;for(let i=0;i<7;i++)if(S.workouts[addDays(ws,i)])n++;return n}
+function weekPlanned(ws){let n=0;for(let i=0;i<7;i++){const k=addDays(ws,i);if(planned(k)||S.workouts[k])n++}return n}
+function recommend(wd,en,tm){
+ let mode,why,mins;
+ if(wd===2&&en===1){mode="recovery";mins=Math.min(10,tm);why="Exhausting day and low energy: a gentle walk and stretch keeps the habit alive and helps you unwind. Showing up counts."}
+ else if(wd===2||en===1){mode="light";mins=Math.min(15,tm);why=(wd===2?"Exhausting day":"Low energy")+": a shorter, lighter session with longer rests. You still get it done without draining yourself."}
+ else if(wd===1&&en===2){mode="standard";mins=Math.min(25,tm);why="Steady day and okay energy: a solid, slightly shorter session today."}
+ else{mode="standard";mins=Math.min(30,tm);why="You have the energy: here is your full session at your current level."}
+ return{mode,mins,why}
+}
+function buildSession(mode,mins,level){
+ const seed=Math.floor(Date.now()/864e5);
+ const L=mode==="standard"?level:1;
+ const sets=mode==="standard"?[2,2,3,3][level-1]:2;
+ const rest=mode==="standard"?[45,40,35,30][level-1]:60;
+ const work=it=>it.u==="s"?it.val:it.val*3.5;
+ const secsOf=it=>it.sets*(work(it)+it.rest);
+ const mk=(e,o,ph)=>Object.assign({id:e.id,n:e.n,u:e.u,ps:e.ps,steps:e.steps,val:e.v[Math.min(L,4)-1]||e.v[3],sets:1,rest:10,phase:ph},o||{});
+ const byT=t=>EX.filter(e=>e.t===t);
+ let items=[];
+ if(mode==="recovery"){
+  items.push(mk(exById("w1"),{val:180},"warm"));
+  ["w2","w3"].forEach(i=>items.push(mk(exById(i),{val:40},"warm")));
+  ["c1","c2","c3","c4","c5"].forEach(i=>items.push(mk(exById(i),{val:45},"cool")));
+  return{items,secs:items.reduce((a,b)=>a+secsOf(b),0)};
+ }
+ const warmIds=mins<=20?["w1","w2"]:["w1","w2","w3"];
+ const coolIds=mins<=20?["c1","c3","c5"]:["c1","c2","c3","c5"];
+ const warm=warmIds.map(i=>mk(exById(i),null,"warm"));
+ const cool=coolIds.map(i=>mk(exById(i),null,"cool"));
+ const fixed=[...warm,...cool].reduce((a,b)=>a+secsOf(b),0);
+ const budget=mins*60-fixed;
+ const tpl=["cardio","lower","upper","core","cardio","lower","core","upper","cardio","lower","core","upper"];
+ const used=new Set();let t=0;const main=[];
+ tpl.forEach((ty,i)=>{
+  const c=byT(ty).filter(e=>L>=e.lv[0]&&L<=e.lv[1]&&!used.has(e.id)&&(mode==="standard"||e.low));
+  if(!c.length)return;
+  const e=c[(seed+i)%c.length];
+  const it=mk(e,{sets,rest},"main");
+  const s=secsOf(it);
+  if(t+s>budget)return;
+  used.add(e.id);main.push(it);t+=s;
+ });
+ items=[...warm,...main,...cool];
+ return{items,secs:fixed+t};
+}
+const rx=it=>it.phase==="main"?`${it.sets} sets × ${it.val} ${it.u==="s"?"sec":"reps"}${it.ps?" each side":""} · rest ${it.rest}s`:`${it.val} sec${it.ps?" each side":""}`;
+
+/* ============ UI parts ============ */
+function ring(p,color,big,small,label){const r=34,c=2*Math.PI*r,q=Math.max(0,Math.min(1,p));
+ return `<div class="ring"><svg viewBox="0 0 80 80"><circle cx="40" cy="40" r="${r}" class="rbg"/><circle cx="40" cy="40" r="${r}" class="rfg" style="stroke:${color};stroke-dasharray:${(c*q).toFixed(1)} ${c.toFixed(1)}" transform="rotate(-90 40 40)"/></svg><div class="rin"><b>${big}</b><span>${small}</span></div><div class="rl">${label}</div></div>`}
+const TIPS=["Showing up for 10 minutes beats skipping a perfect workout.","Hit your protein target first. It keeps you full and protects muscle while you lose fat.","Drink a glass of water before meals; thirst often disguises itself as hunger.","A slow, steady loss of about 0.25–0.75 kg a week is sustainable. Slow is fine.","Missed a day? No problem. Reschedule it and carry on.","Good sleep reduces cravings more than willpower does.","A 10-minute walk after meals helps digestion and energy.","You do not have to eat perfectly. Aim for good choices most of the time."];
+function tip(){const d=parse(today());return TIPS[(d.getDate()+d.getMonth())%TIPS.length]}
+
+/* ============ views ============ */
+function vOnboard(){
+ return `<div class="onb"><div class="logo" style="font-size:16px">NO<span>EXCUSE</span></div><h1>Your home fitness coach.</h1>
+ <p class="mut">Beginner-friendly workouts, flexible scheduling and smart food guidance. No gym needed. Tell us a bit about you (stays on your device).</p>
+ <div class="card"><label class="f">Your name</label><input id="ob_name" placeholder="e.g. Vibhor">
+ <div class="grid2"><div><label class="f">Sex (for calorie formula)</label><select id="ob_sex"><option value="m">Male</option><option value="f">Female</option></select></div><div><label class="f">Age</label><input id="ob_age" type="number" inputmode="numeric" value="30"></div></div>
+ <div class="grid2"><div><label class="f">Height (cm)</label><input id="ob_cm" type="number" inputmode="decimal" value="170"></div><div><label class="f">Weight (kg)</label><input id="ob_kg" type="number" inputmode="decimal" value="80"></div></div>
+ <label class="f">Goal weight (kg)</label><input id="ob_goal" type="number" inputmode="decimal" value="72">
+ <label class="f">Daily activity (outside workouts)</label><select id="ob_act"><option value="1.2">Mostly sitting (desk job)</option><option value="1.375">Lightly active</option><option value="1.55">Quite active</option></select>
+ <button class="full" style="margin-top:14px" data-act="onboard">Start my journey</button></div>
+ <p class="disc">NOEXCUSE offers general wellness guidance, not medical advice. If you have a health condition, injury or are pregnant, check with your doctor first.</p></div>`;
+}
+function vToday(){
+ const k=today(),t=totals(k),P=S.profile,w=S.workouts[k],pl=planned(k),ms=missed();
+ const cp=t.c/P.kcal;const col=cp>1.1?"var(--bad)":cp>1?"var(--warn)":"var(--acc)";
+ const left=P.kcal-t.c,pleft=Math.max(0,R(P.protein-t.p));
+ let wk;
+ if(w)wk=`<div class="card hero"><h2>✅ Workout done today</h2><div>${w.mins} min · Great job${P.name?", "+esc(P.name):""}. Rest, hydrate and eat well.</div></div>`;
+ else if(pl)wk=`<div class="card hero"><h2>Today is a workout day</h2><div class="mut" style="margin-bottom:10px">Tell us how today went and we will pick the right workout.</div><div class="row wrap"><button data-act="tab" data-v="workout">Check in & start</button><button class="sec" style="background:rgba(255,255,255,.2);color:#fff" data-act="moveTomorrow">Move to ${nice(nextFree()).split(",")[0]}</button></div></div>`;
+ else wk=`<div class="card"><h2>Rest day 😌</h2><div class="mut" style="margin-bottom:10px">Recovery is part of the plan. Feeling good? A light session is always optional.</div><button class="sec" data-act="tab" data-v="workout">Optional light workout</button></div>`;
+ const lvl=S.level;
+ return `<div class="card"><div class="rings">${ring(cp,col,t.c,"of "+P.kcal,"Calories")}${ring(t.p/P.protein,"var(--ok)",t.p+"g","of "+P.protein+"g","Protein")}</div>
+ <div class="small mut" style="text-align:center;margin-top:8px">${left>=0?`<b>${left}</b> kcal and <b>${pleft} g</b> protein remaining`:`<b>${-left}</b> kcal over target. Totally fine; just keep tomorrow light.`}</div>
+ <div class="row" style="margin-top:10px"><button class="full sm" data-act="tab" data-v="food">+ Log a meal</button><button class="full sm sec" data-act="tab" data-v="coach">Ask Coach</button></div></div>
+ ${wk}
+ ${ms.length?`<div class="card" style="border-color:var(--bad)"><b>${ms.length} missed workout${ms.length>1?"s":""}</b><div class="small mut">No guilt. Reschedule without disturbing the rest of your week.</div><button class="sm sec" style="margin-top:8px" data-act="tab" data-v="workout">Reschedule</button></div>`:""}
+ <div class="card"><div class="row between"><b>Level ${lvl}: ${LEVELS[lvl-1]}</b><span class="small mut">${lvl<4?R(Math.min(4,S.points)*10)/10+"/4 to next level":"Top level reached 🎉"}</span></div><div class="bar" style="margin-top:8px"><i style="width:${lvl<4?Math.min(100,S.points/4*100):100}%"></i></div></div>
+ <div class="card" style="background:var(--acc2)"><b>💡 Coach tip</b><div>${esc(tip())}</div></div>`;
+}
+function vWorkout(){
+ if(T.sess)return vSession();
+ const c=T.chk;
+ const pill=(grp,val,label,cur)=>`<button class="pill ${cur===val?"on":""}" data-act="${grp}" data-v="${val}">${label}</button>`;
+ // week strip
+ const ws=weekStart(today());let strip="";const t=today();
+ for(let i=0;i<7;i++){const k=addDays(ws,i),d=parse(k);let cls="day";
+  if(S.workouts[k])cls+=" done";else if(planned(k)){cls+=k<t?" miss":" plan"}
+  if(k===t)cls+=" now";
+  strip+=`<button class="${cls}" data-act="togplan" data-k="${k}">${DN[d.getDay()]}<b>${d.getDate()}</b></button>`}
+ const ms=missed();
+ let h=`<div class="card"><div class="row between"><h2>This week</h2><span class="small mut">${weekDone(ws)}/${weekPlanned(ws)} done</span></div><div class="week">${strip}</div><div class="small mut" style="margin-top:6px">Tap a day to add or remove a workout. Orange = planned, green = done, red = missed.</div></div>`;
+ if(ms.length){h+=`<div class="card" style="border-color:var(--bad)"><h3>Missed workouts</h3>`+ms.map(k=>`<div class="item"><div><b>${nice(k)}</b><div class="small mut">Move it, or skip without guilt</div></div><div class="row wrap" style="justify-content:flex-end">${!planned(t)&&!S.workouts[t]?`<button class="sm" data-act="resched" data-k="${k}" data-to="today">Today</button>`:""}<button class="sm sec" data-act="resched" data-k="${k}" data-to="next">${nice(nextFree()).split(",")[0]} ${parse(nextFree()).getDate()}</button><button class="sm ghost" data-act="skip" data-k="${k}">Skip</button></div></div>`).join("")+`</div>`}
+ h+=`<div class="card"><h2>How was your day?</h2>
+ <div class="row wrap">${pill("wd",0,"😌 Light",c.wd)}${pill("wd",1,"😐 Moderate",c.wd)}${pill("wd",2,"😮‍💨 Exhausting",c.wd)}</div>
+ <h3 style="margin-top:14px">Energy right now?</h3>
+ <div class="row wrap">${pill("en",1,"🔋 Low",c.en)}${pill("en",2,"🙂 Okay",c.en)}${pill("en",3,"⚡ High",c.en)}</div>
+ <h3 style="margin-top:14px">Time you have?</h3>
+ <div class="row wrap">${[10,15,20,30].map(m=>pill("tm",m,m+" min",c.tm)).join("")}</div>
+ <button class="full" style="margin-top:14px" data-act="getplan">Get my workout</button></div>`;
+ if(T.rec){const r=T.rec;const names={recovery:"Gentle recovery",light:"Light session",standard:"Standard session"};
+  h+=`<div class="card" style="border-color:var(--acc)"><div class="small mut">RECOMMENDED FOR TODAY</div><h2>${names[r.mode]} · ${r.mins} min</h2><div class="mut">${esc(r.why)}</div>
+  <div class="small mut" style="margin:10px 0 4px">Prefer something different?</div><div class="row wrap">${["recovery","light","standard"].map(m=>`<button class="pill ${r.mode===m?"on":""}" data-act="setmode" data-v="${m}">${names[m].split(" ")[0]}</button>`).join("")}</div>
+  <button class="full" style="margin-top:12px" data-act="start">Start workout ▶</button></div>`}
+ h+=`<div class="card"><b>Level ${S.level}: ${LEVELS[S.level-1]}</b><div class="small mut">Workouts get gradually harder as you complete sessions. Tell us how each one felt and we adjust.</div></div>`;
+ return h;
+}
+function vSession(){
+ const s=T.sess;let h=`<div class="row between" style="margin-top:6px"><div><h2 style="margin:0">${{recovery:"Gentle recovery",light:"Light session",standard:"Standard session"}[s.mode]}</h2><div class="small mut">≈ ${R(s.secs/60)} min · Level ${s.level} · <span id="sessProg"></span></div></div><button class="ghost sm" data-act="exit">Exit</button></div>
+ <div class="restbar" id="restBar"><span id="restTxt"></span><button class="sm" style="background:#fff;color:#000" data-act="restStop">Skip</button></div>`;
+ let last="";
+ s.items.forEach((it,i)=>{
+  if(it.phase!==last){last=it.phase;h+=`<div class="phase">${{warm:"Warm-up",main:"Main circuit",cool:"Cool-down"}[it.phase]}</div>`}
+  h+=`<div class="ex ${s.done[i]?"done":""}" id="ex${i}"><div class="row"><input type="checkbox" data-act="toggleEx" data-i="${i}" ${s.done[i]?"checked":""}><div style="flex:1"><div class="exn">${esc(it.n)}</div><div class="small mut">${rx(it)}</div></div>${it.phase==="main"?`<button class="sm sec" data-act="rest" data-s="${it.rest}">⏱ ${it.rest}s</button>`:""}</div>
+  <details><summary>How to do it</summary><ol>${it.steps.map(x=>`<li>${esc(x)}</li>`).join("")}</ol><a class="btn sm sec" target="_blank" rel="noopener" href="${yt(it.n+" proper form beginner")}">▶ Watch technique on YouTube</a></details></div>`});
+ h+=`<div class="card" style="margin-top:16px"><h3>How did it feel?</h3><div class="row wrap"><button class="pill" data-act="finish" data-v="easy">😎 Easy</button><button class="pill" data-act="finish" data-v="right">👍 Just right</button><button class="pill" data-act="finish" data-v="tough">🥵 Tough</button></div><div class="small mut" style="margin-top:6px">Tap one to finish and log your workout.</div></div>`;
+ return h;
+}
+function mealBlock(name,list,k){
+ if(!list.length)return"";
+ const c=R(list.reduce((a,b)=>a+b.kcal,0)),p=R(list.reduce((a,b)=>a+b.p,0));
+ return `<div class="card"><div class="row between"><b>${name}</b><span class="small mut">${c} kcal · ${p} g</span></div>${list.map(x=>`<div class="item"><div>${esc(x.name)}<div class="small mut">${R(x.kcal)} kcal · ${R(x.p*10)/10} g protein</div></div><button class="sm ghost" data-act="del" data-id="${x.id}">✕</button></div>`).join("")}</div>`;
+}
+function foodResults(q){
+ q=(q||"").toLowerCase().trim();
+ const list=FOODS.map((f,i)=>({f,i})).filter(o=>!q||o.f[0].toLowerCase().includes(q)).slice(0,q?14:8);
+ if(!list.length)return`<div class="small mut" style="padding:8px 0">No match. Use "Add custom food" below.</div>`;
+ return list.map(o=>`<div class="item"><div>${esc(o.f[0])}<div class="small mut">${esc(o.f[1])} · ${o.f[2]} kcal · ${o.f[3]} g protein</div></div><button class="sm" data-act="qadd" data-i="${o.i}">+ Add</button></div>`).join("");
+}
+function vFood(){
+ const k=T.fd||today();if(!T.meal)T.meal=defMeal();
+ const P=S.profile,t=totals(k),list=S.food[k]||[];
+ const left=P.kcal-t.c,pleft=P.protein-t.p;
+ const ok=t.c<=P.kcal*1.05;
+ let msg;
+ if(t.c===0)msg="Nothing logged yet. Start with your first meal!";
+ else if(t.c>P.kcal*1.1)msg="A bit above target today. No stress: a lighter, protein-rich dinner or a walk will balance it out.";
+ else if(t.p>=P.protein&&ok)msg="Targets met. Calories controlled and protein hit. 💪";
+ else if(ok)msg=`You are within your calories. ${Math.max(0,R(pleft))} g more protein to go.`;
+ else msg="Just around your calorie target. Choose a protein-rich option for the rest of the day.";
+ let sug="";
+ if(k===today()&&pleft>10&&left>80){
+  const c=FOODS.filter(f=>f[2]<=Math.max(left,100)&&f[3]>=8).sort((a,b)=>b[3]/b[2]-a[3]/a[2]).slice(0,3);
+  if(c.length)sug=`<div class="small" style="margin-top:8px"><b>Protein ideas that fit:</b> ${c.map(f=>esc(f[0])+" ("+f[3]+" g, "+f[2]+" kcal)").join(" · ")}</div>`}
+ const bc=t.c>P.kcal*1.1?"var(--bad)":t.c>P.kcal?"var(--warn)":"var(--acc)";
+ // weekly
+ const days=[];for(let i=6;i>=0;i--)days.push(addDays(today(),-i));
+ const tots=days.map(totals);const mx=Math.max(P.kcal*1.3,...tots.map(x=>x.c));
+ const logged=tots.filter(x=>x.c>0);
+ const avgP=logged.length?R(logged.reduce((a,b)=>a+b.p,0)/logged.length):0;
+ const onT=tots.filter(x=>x.c>0&&x.c<=P.kcal*1.05&&x.p>=P.protein*0.9).length;
+ let h=`<div class="row between" style="margin-top:6px"><button class="sm ghost" data-act="fprev">◀</button><b>${k===today()?"Today":nice(k)}</b><button class="sm ghost" data-act="fnext" ${k>=today()?"disabled style='opacity:.3'":""}>▶</button></div>
+ <div class="card"><div class="row between"><b>Calories</b><span><b>${t.c}</b> / ${P.kcal} kcal</span></div><div class="bar" style="margin:6px 0 10px"><i style="width:${Math.min(100,t.c/P.kcal*100)}%;background:${bc}"></i></div>
+ <div class="row between"><b>Protein</b><span><b>${t.p}</b> / ${P.protein} g</span></div><div class="bar" style="margin:6px 0 10px"><i style="width:${Math.min(100,t.p/P.protein*100)}%;background:var(--ok)"></i></div>
+ <div class="grid2"><div class="small"><span class="mut">Calories left</span><br><b style="font-size:18px">${left>=0?left:"0 (+"+(-left)+")"}</b></div><div class="small"><span class="mut">Protein left</span><br><b style="font-size:18px">${Math.max(0,R(pleft))} g</b></div></div>
+ <div style="margin-top:8px">${msg}</div>${sug}</div>
+ <div class="card"><h3>Quick add</h3><div class="row wrap" style="margin-bottom:8px">${["Breakfast","Lunch","Snack","Dinner"].map(m=>`<button class="pill ${T.meal===m?"on":""}" data-act="meal" data-v="${m}">${m}</button>`).join("")}</div>
+ <input id="fq" placeholder="Search foods (roti, paneer, banana...)" autocomplete="off"><div id="fres">${foodResults("")}</div>
+ <details style="margin-top:8px"><summary>+ Add custom food</summary><label class="f">Food name</label><input id="cf_n"><div class="grid2"><div><label class="f">Calories (kcal)</label><input id="cf_c" type="number" inputmode="decimal"></div><div><label class="f">Protein (g)</label><input id="cf_p" type="number" inputmode="decimal"></div></div><button class="full" style="margin-top:10px" data-act="addcustom">Add to ${T.meal}</button></details></div>
+ ${["Breakfast","Lunch","Snack","Dinner"].map(m=>mealBlock(m,list.filter(x=>x.meal===m),k)).join("")}
+ <div class="card"><div class="row between"><h3>Last 7 days</h3><span class="small mut">Avg protein ${avgP} g · ${onT}/7 days on target</span></div>
+ <div class="bars"><div class="tline" style="bottom:${P.kcal/mx*100}%"></div>${tots.map(x=>`<div><i style="height:${x.c/mx*100}%;background:${x.c>P.kcal*1.1?"var(--bad)":"var(--acc)"}"></i></div>`).join("")}</div>
+ <div class="blab">${days.map(d=>`<span>${DN[parse(d).getDay()][0]}</span>`).join("")}</div><div class="small mut" style="margin-top:4px">Dashed line = your calorie target (${P.kcal})</div></div>`;
+ return h;
+}
+function vCoach(){
+ const m=T.coach;
+ let h=`<div class="seg" style="margin:10px 0"><button class="${m==="crave"?"on":""}" data-act="cmode" data-v="crave">🍕 Craving helper</button><button class="${m==="cook"?"on":""}" data-act="cmode" data-v="cook">🍳 Cook smarter</button></div>`;
+ if(m==="crave"){
+  h+=`<div class="card"><h3>What are you craving?</h3><div class="row"><input id="cin" placeholder="e.g. pizza, burger, something sweet" value="${esc(T.cravQ)}" autocomplete="off"><button data-act="crave">Go</button></div>
+  <div class="row wrap" style="margin-top:8px">${["Pizza","Burger","Something sweet","Chips","Biryani","Samosa","Pasta","Cold drink"].map(c=>`<button class="pill" data-act="cravechip" data-v="${c}">${c}</button>`).join("")}</div></div><div id="cout">${T.cravQ?cravOut(T.cravQ):""}</div>`;
+ }else{
+  h+=`<div class="card"><h3>What are you cooking?</h3><div class="row"><input id="kin" placeholder='e.g. "I want to cook Maggi"' value="${esc(T.cookQ)}" autocomplete="off"><button data-act="cook">Go</button></div>
+  <div class="row wrap" style="margin-top:8px">${DISHES.map(d=>`<button class="pill ${T.dish===d.id?"on":""}" data-act="dish" data-v="${d.id}">${esc(d.name.split(" (")[0])}</button>`).join("")}</div></div><div id="kout">${T.dish?cookOut(T.dish):""}</div>`;
+ }
+ return h+`<div class="disc">Coach suggestions use built-in nutrition data and approximate values. Real values vary by brand and portion.</div>`;
+}
+function cravOut(q){
+ q=q.toLowerCase();const hits=CRAVE.filter(c=>c.k.some(w=>q.includes(w)));
+ if(!hits.length)return`<div class="card"><b>I do not have a swap for that yet.</b><div class="mut" style="margin-top:4px">General rule that works for most cravings:</div><ol><li>Pick a smaller portion (about 1/3 of the usual).</li><li>Put it on a plate and sit down to eat it slowly.</li><li>Pair it with protein (curd, egg, paneer, sprouts) so you stay full.</li><li>Log it. Nothing is off limits.</li></ol><div class="small mut">Try: pizza, burger, sweet, chocolate, ice cream, chips, samosa, biryani, pasta, cold drink.</div></div>`;
+ return hits.map(c=>`<div class="card"><h2>${c.title}</h2><div class="small mut">Usual version: ${esc(c.reg)}</div>${c.opts.map((o,i)=>`<div class="ex"><div class="exn">${esc(o.n)}</div><div style="margin:4px 0"><span class="badge">${o.kcal} kcal</span><span class="badge">${o.p} g protein</span><span class="badge">⏱ ${esc(o.t)}</span></div><div>${esc(o.why)}</div>
+ <details ${hits.length===1&&i===0?"open":""}><summary>Ingredients & steps</summary><b class="small">Ingredients</b><ul>${o.ing.map(x=>`<li>${esc(x)}</li>`).join("")}</ul><b class="small">Method</b><ol>${o.steps.map(x=>`<li>${esc(x)}</li>`).join("")}</ol></details>
+ <div class="row wrap" style="margin-top:8px"><button class="sm" data-act="logcrave" data-c="${c.id}" data-o="${i}">+ Log it</button><a class="btn sm sec" target="_blank" rel="noopener" href="${yt("healthy "+o.n+" recipe")}">▶ Watch recipe</a></div></div>`).join("")}</div>`).join("");
+}
+function cookOut(id){
+ const d=DISHES.find(x=>x.id===id);if(!d)return"";
+ const cats=["Protein","Veg & fibre","Extra","Swap"];
+ let rows="";let idx=0;
+ const order=d.add.map((a,i)=>({a,i}));
+ cats.forEach(cat=>{const g=order.filter(o=>o.a[3]===cat);if(!g.length)return;
+  rows+=`<div class="phase">${cat==="Swap"?"Healthy swaps":cat==="Extra"?"Extras":cat}</div>`+g.map(o=>`<div class="addrow"><input type="checkbox" data-ai="${o.i}"><div class="t">${esc(o.a[0])}<small class="${o.a[1]<0?"neg":""}">${o.a[1]>0?"+":""}${o.a[1]} kcal · ${o.a[2]>0?"+":""}${o.a[2]} g protein</small></div><select data-am="${o.i}"><option value="0.5">×½</option><option value="1" selected>×1</option><option value="2">×2</option><option value="3">×3</option></select></div>`).join("")});
+ return `<div class="card"><h2>${esc(d.name)}</h2><div class="small mut">Base: ${d.kcal} kcal and ${d.p} g protein per ${d.unit}</div>
+ <label class="f">How many ${esc(d.unit.split(" (")[0])}s are you cooking?</label><input id="cserv" type="number" step="0.5" min="0.5" value="1" inputmode="decimal">
+ <div class="small mut" style="margin-top:8px">Tick what you will add and set the quantity multiplier (×1 = the amount shown).</div>${rows}
+ <div class="card" style="background:var(--acc2);margin-bottom:0;margin-top:10px" id="ctot"></div>
+ <div class="phase">Healthier cooking tips</div><ul>${d.tips.map(t=>`<li>${esc(t)}</li>`).join("")}</ul>
+ <label class="f">I will eat</label><select id="cshare"><option value="1">The whole thing</option><option value="0.5">Half</option><option value="0.33">A third</option><option value="0.25">A quarter</option></select>
+ <div class="row wrap" style="margin-top:10px"><button data-act="logcook">+ Log my portion</button><a class="btn sec" target="_blank" rel="noopener" href="${yt("healthy "+d.name.split(" (")[0]+" recipe high protein")}">▶ Watch ideas</a></div></div>`;
+}
+function calcCook(){
+ const d=DISHES.find(x=>x.id===T.dish);const box=$("#ctot");if(!d||!box)return;
+ let serv=parseFloat($("#cserv").value);if(!(serv>0))serv=1;serv=Math.min(serv,20);
+ let bk=d.kcal*serv,bp=d.p*serv,k=bk,p=bp;
+ document.querySelectorAll("[data-ai]").forEach(cb=>{if(cb.checked){const i=+cb.dataset.ai,m=parseFloat(document.querySelector('[data-am="'+i+'"]').value)||1;k+=d.add[i][1]*m;p+=d.add[i][2]*m}});
+ k=Math.max(0,k);p=Math.max(0,p);
+ const dens=k>0?R(p/k*1000)/10:0,bdens=bk>0?R(bp/bk*1000)/10:0;
+ box.innerHTML=`<div class="row between"><div><div class="small mut">Original</div><b>${R(bk)} kcal · ${R(bp)} g</b></div><div style="font-size:20px">→</div><div><div class="small mut">Improved</div><b style="color:var(--acc)">${R(k)} kcal · ${R(p*10)/10} g</b></div></div><div class="small" style="margin-top:6px">Protein per 100 kcal: ${bdens} g → <b>${dens} g</b>. Estimates are approximate.</div>`;
+ const sh=parseFloat($("#cshare").value)||1;
+ T.cookLog={name:d.name.split(" (")[0]+" (improved)",kcal:k*sh,p:p*sh};
+}
+function svgWeights(){
+ const w=S.weights;if(w.length<2)return`<div class="small mut" style="padding:12px 0">Log at least two weigh-ins to see your trend.</div>`;
+ const W=320,H=140,pd=26;const kg=w.map(x=>x.kg);let mn=Math.min(...kg)-1,mx=Math.max(...kg)+1;
+ const x=i=>pd+(w.length===1?0:i*(W-pd*2)/(w.length-1)),y=v=>H-pd-(v-mn)/(mx-mn)*(H-pd*2);
+ const pts=w.map((o,i)=>x(i)+","+y(o.kg)).join(" ");
+ const ma=w.map((o,i)=>{const s=w.slice(Math.max(0,i-2),i+1);return x(i)+","+y(s.reduce((a,b)=>a+b.kg,0)/s.length)}).join(" ");
+ return `<svg viewBox="0 0 ${W} ${H}" style="width:100%"><polyline points="${pts}" fill="none" stroke="var(--mut)" stroke-width="1.5" stroke-dasharray="3 3"/><polyline points="${ma}" fill="none" stroke="var(--acc)" stroke-width="3" stroke-linecap="round"/>${w.map((o,i)=>`<circle cx="${x(i)}" cy="${y(o.kg)}" r="3" fill="var(--acc)"/>`).join("")}<text x="4" y="${y(mx-1)+4}" font-size="10" fill="var(--mut)">${(mx-1).toFixed(1)}</text><text x="4" y="${y(mn+1)+4}" font-size="10" fill="var(--mut)">${(mn+1).toFixed(1)}</text></svg><div class="row between small mut"><span>${nice(w[0].d)}</span><span>${nice(w[w.length-1].d)}</span></div>`;
+}
+function vProgress(){
+ const P=S.profile,w=S.weights,ws=weekStart(today());
+ const total=Object.keys(S.workouts).length;
+ const mins=Object.values(S.workouts).reduce((a,b)=>a+(b.mins||0),0);
+ const first=w.length?w[0].kg:P.kg,cur=w.length?w[w.length-1].kg:P.kg;
+ const diff=R((cur-first)*10)/10,toGoal=R((cur-P.goal)*10)/10;
+ // weekly bars (last 4 weeks)
+ const wb=[];for(let i=3;i>=0;i--){const s=addDays(ws,-7*i);wb.push({n:weekDone(s),p:Math.max(weekPlanned(s),S.days.length)})}
+ // feedback
+ let fb=[];
+ const rec=w.filter(x=>x.d>=addDays(today(),-21));
+ if(rec.length>=2){const a=rec[0],b=rec[rec.length-1];const days=Math.max(1,(parse(b.d)-parse(a.d))/864e5);const perWk=(b.kg-a.kg)/days*7;
+  if(perWk<-1)fb.push("Your weight is dropping faster than ideal. Add a snack and a protein source and keep workouts moderate. Slower is safer and more lasting.");
+  else if(perWk<-0.1)fb.push("Your trend is heading down at a healthy pace. Keep going. This is exactly how sustainable fat loss looks.");
+  else if(perWk<=0.2)fb.push("Weight is steady. Daily weight swings of 1–2 kg are normal; focus on workouts, protein and portions for a few more weeks.");
+  else fb.push("Weight is up a little recently. That can be water or muscle at the start. Stay consistent and check the 2-week trend before changing anything.")}
+ const cw=weekDone(ws),pw=weekPlanned(ws);
+ if(cw>=pw&&pw>0)fb.push("You hit your workout goal this week. Brilliant consistency. 🔥");
+ else if(cw>0)fb.push(`${cw} workout${cw>1?"s":""} done this week. Every session counts, even short ones.`);
+ else fb.push("No workouts yet this week. A 10-minute session today is a great restart.");
+ if(!fb.length)fb.push("Keep logging. Small steps add up.");
+ return `<div class="grid2"><div class="card"><div class="small mut">Workouts done</div><b style="font-size:26px">${total}</b><div class="small mut">${mins} active min</div></div><div class="card"><div class="small mut">Level</div><b style="font-size:26px">${S.level}</b><div class="small mut">${LEVELS[S.level-1]}</div></div></div>
+ <div class="card"><h3>Weekly consistency</h3><div class="bars" style="height:90px">${wb.map(b=>`<div><i style="height:${Math.min(100,b.n/b.p*100)}%;background:${b.n>=b.p?"var(--ok)":"var(--acc)"}"></i></div>`).join("")}</div><div class="blab">${wb.map((b,i)=>`<span>${b.n}/${b.p}${i===3?"<br>this wk":""}</span>`).join("")}</div></div>
+ <div class="card"><div class="row between"><h3>Body weight</h3><span class="small mut">${cur} kg · ${diff>0?"+":""}${diff} since start · ${toGoal>0?toGoal+" kg to goal":"goal reached!"}</span></div>${svgWeights()}
+ <div class="small mut">Orange = smoothed trend. Dotted = daily readings.</div>
+ <div class="row" style="margin-top:10px"><input id="wkg" type="number" step="0.1" inputmode="decimal" placeholder="Today's weight (kg)"><button data-act="addw">Save</button></div></div>
+ <div class="card" style="background:var(--acc2)"><b>🎯 Your coach says</b><ul>${fb.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>`;
+}
+function vSettings(){
+ const P=S.profile;
+ return `<div class="row between" style="margin-top:8px"><h2 style="margin:0">Profile & settings</h2><button class="sm ghost" data-act="closecfg">Close</button></div>
+ <div class="card"><label class="f">Name</label><input id="s_name" value="${esc(P.name)}">
+ <div class="grid2"><div><label class="f">Sex</label><select id="s_sex"><option value="m" ${P.sex==="m"?"selected":""}>Male</option><option value="f" ${P.sex==="f"?"selected":""}>Female</option></select></div><div><label class="f">Age</label><input id="s_age" type="number" value="${P.age}"></div></div>
+ <div class="grid2"><div><label class="f">Height (cm)</label><input id="s_cm" type="number" value="${P.cm}"></div><div><label class="f">Goal weight (kg)</label><input id="s_goal" type="number" value="${P.goal}"></div></div>
+ <label class="f">Daily activity</label><select id="s_act">${[[1.2,"Mostly sitting"],[1.375,"Lightly active"],[1.55,"Quite active"]].map(a=>`<option value="${a[0]}" ${P.act==a[0]?"selected":""}>${a[1]}</option>`).join("")}</select>
+ <div class="grid2"><div><label class="f">Daily calories</label><input id="s_kcal" type="number" value="${P.kcal}"></div><div><label class="f">Daily protein (g)</label><input id="s_prot" type="number" value="${P.protein}"></div></div>
+ <button class="sm sec" style="margin-top:8px" data-act="recalc">Recalculate suggested targets</button>
+ <label class="f">Weekly workout days</label><div class="row wrap">${[1,2,3,4,5,6,0].map(d=>`<button class="pill ${S.days.includes(d)?"on":""}" data-act="togday" data-d="${d}">${DN[d]}</button>`).join("")}</div>
+ <label class="f">Workout level</label><select id="s_lvl">${LEVELS.map((l,i)=>`<option value="${i+1}" ${S.level===i+1?"selected":""}>${i+1} · ${l}</option>`).join("")}</select>
+ <button class="full" style="margin-top:14px" data-act="savecfg">Save</button></div>
+ <div class="card"><b>Your data</b><div class="small mut">Everything is stored only on this device.</div><div class="row wrap" style="margin-top:8px"><button class="sm sec" data-act="export">Download backup</button><button class="sm ghost" data-act="reset" style="color:var(--bad)">Erase all data</button></div></div>
+ <p class="disc">Calorie and protein targets are estimates for healthy adults. Minimums are enforced (1200 kcal women, 1500 kcal men). Not medical advice.</p>`;
+}
+
+/* ============ render ============ */
+const TABS=[["today","🏠","Today"],["workout","💪","Workout"],["food","🍽️","Food"],["coach","🤖","Coach"],["progress","📈","Progress"]];
+function render(keepScroll){
+ const y=window.scrollY;
+ const app=$("#app");
+ if(!S.profile){app.innerHTML=vOnboard();return}
+ let body;
+ if(T.cfg)body=vSettings();
+ else body={today:vToday,workout:vWorkout,food:vFood,coach:vCoach,progress:vProgress}[T.tab]();
+ app.innerHTML=`<header class="top"><div><div class="logo">NO<span>EXCUSE</span></div><div class="date">${nice(today())}${S.profile.name?" · Hi, "+esc(S.profile.name):""}</div></div><button class="gear" data-act="opencfg" aria-label="Settings">⚙️</button></header>${body}
+ <nav class="tabs"><div>${TABS.map(t=>`<button class="${T.tab===t[0]&&!T.cfg?"on":""}" data-act="tab" data-v="${t[0]}"><span>${t[1]}</span>${t[2]}</button>`).join("")}</div></nav>`;
+ window.scrollTo(0,keepScroll?y:0);
+ if(T.tab==="workout"&&T.sess&&!T.cfg)updSess();
+}
+function updSess(){const s=T.sess;if(!s)return;const n=s.items.length,d=Object.values(s.done).filter(Boolean).length;const e=$("#sessProg");if(e)e.textContent=d+"/"+n+" done"}
+
+/* ============ rest timer ============ */
+let restInt=null;
+function startRest(sec){
+ stopRest();T.rest=sec;const bar=$("#restBar");if(!bar)return;bar.classList.add("on");
+ const tick=()=>{const t=$("#restTxt");if(t)t.textContent="Rest: "+T.rest+"s";if(T.rest<=0){stopRest();toast("Rest over. Next set!");if(navigator.vibrate)try{navigator.vibrate(300)}catch(e){}return}T.rest--};
+ tick();restInt=setInterval(tick,1000);
+}
+function stopRest(){clearInterval(restInt);restInt=null;const b=$("#restBar");if(b)b.classList.remove("on")}
+
+/* ============ actions ============ */
+const A={
+ tab(el){T.cfg=false;T.tab=el.dataset.v;render()},
+ opencfg(){T.cfg=true;render()},
+ closecfg(){T.cfg=false;render()},
+ onboard(){
+  const g=id=>$("#"+id).value;
+  const p={name:g("ob_name").trim(),sex:g("ob_sex"),age:+g("ob_age")||30,cm:+g("ob_cm")||170,kg:+g("ob_kg")||75,goal:+g("ob_goal")||70,act:+g("ob_act")||1.2};
+  if(p.age<16||p.age>90||p.cm<120||p.cm>230||p.kg<35||p.kg>250){toast("Please check your age, height and weight.");return}
+  Object.assign(p,calcTargets(p));S.profile=p;S.created=today();S.weights=[{d:today(),kg:p.kg}];save();render();toast("Welcome! Your daily targets are set. You can edit them in ⚙️.");
+ },
+ recalc(){const g=id=>$("#"+id).value;const P=Object.assign({},S.profile,{sex:g("s_sex"),age:+g("s_age"),cm:+g("s_cm"),act:+g("s_act")});const w=S.weights.length?S.weights[S.weights.length-1].kg:P.kg;const t=calcTargets(Object.assign({},P,{kg:w}));$("#s_kcal").value=t.kcal;$("#s_prot").value=t.protein;toast("Suggested targets filled in. Press Save to keep them.")},
+ togday(el){const d=+el.dataset.d;const i=S.days.indexOf(d);if(i>=0)S.days.splice(i,1);else S.days.push(d);el.classList.toggle("on")},
+ savecfg(){
+  const g=id=>$("#"+id).value;const P=S.profile;
+  P.name=g("s_name").trim();P.sex=g("s_sex");P.age=+g("s_age")||P.age;P.cm=+g("s_cm")||P.cm;P.goal=+g("s_goal")||P.goal;P.act=+g("s_act");
+  const min=P.sex==="m"?1500:1200;let k=+g("s_kcal")||P.kcal;
+  if(k<min){k=min;toast("Calories raised to the safe minimum ("+min+").")}
+  P.kcal=R(k);P.protein=Math.min(250,Math.max(30,R(+g("s_prot")||P.protein)));
+  S.level=+g("s_lvl")||1;if(!S.days.length)S.days=[1,3,5];
+  save();T.cfg=false;render();
+ },
+ export(){const b=new Blob([JSON.stringify(S,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="noexcuse-backup.json";document.body.appendChild(a);a.click();a.remove()},
+ reset(){if(confirm("Erase ALL NOEXCUSE data on this device?")){localStorage.removeItem(KEY);S=defaults();T.cfg=false;T.sess=null;T.rec=null;render()}},
+ /* workout */
+ wd(el){T.chk.wd=+el.dataset.v;render(true)},en(el){T.chk.en=+el.dataset.v;render(true)},tm(el){T.chk.tm=+el.dataset.v;render(true)},
+ getplan(){const c=T.chk;if(c.wd===null||c.en===null){toast("Pick your workday and energy level first.");return}T.rec=recommend(c.wd,c.en,c.tm);render(true)},
+ setmode(el){const m=el.dataset.v,c=T.chk;const mins={recovery:Math.min(10,c.tm),light:Math.min(15,c.tm),standard:c.tm};const why={recovery:"Gentle option chosen: walk and stretch only.",light:"Light session chosen: easier moves with longer rests.",standard:"Full session chosen: you know your body best. Stop if anything hurts."};T.rec={mode:m,mins:mins[m],why:why[m]};render(true)},
+ start(){const r=T.rec;if(!r)return;const b=buildSession(r.mode,r.mins,S.level);T.sess={mode:r.mode,mins:r.mins,level:r.mode==="standard"?S.level:1,items:b.items,secs:b.secs,done:{}};render()},
+ toggleEx(el){const i=+el.dataset.i;T.sess.done[i]=el.checked;const c=$("#ex"+i);if(c)c.classList.toggle("done",el.checked);updSess()},
+ rest(el){startRest(+el.dataset.s)},restStop(){stopRest()},
+ exit(){if(confirm("Leave this workout? Progress ticks will be lost.")){stopRest();T.sess=null;render()}},
+ finish(el){
+  const s=T.sess;const d=Object.values(s.done).filter(Boolean).length;
+  if(d===0){toast("Tick off at least one exercise before finishing.");return}
+  stopRest();const feel=el.dataset.v,k=today();
+  const prev=S.workouts[k];const mins=R(s.secs/60*Math.min(1,d/s.items.length+0.15));
+  S.workouts[k]={mode:s.mode,mins:(prev?prev.mins:0)+Math.max(5,Math.min(mins,s.mins+3)),feel,level:s.level};
+  let msg="Workout logged. Nice work! 🎉";
+  if(s.mode!=="recovery"){
+   const base=s.mode==="standard"?1:0.5,mult={easy:1.5,right:1,tough:0.75}[feel];
+   S.points+=base*mult;
+   if(feel==="tough"&&s.mode==="standard")S.tough++;else S.tough=0;
+   if(S.points>=4&&S.level<4){S.level++;S.points=0;S.tough=0;msg="Level up! You are now Level "+S.level+" ("+LEVELS[S.level-1]+") 🚀"}
+   else if(S.tough>=2&&S.level>1){S.level--;S.tough=0;S.points=2;msg="We eased things a notch so it stays enjoyable. Progress is not a race. 👏"}
+  }
+  save();T.sess=null;T.rec=null;T.tab="today";render();toast(msg);
+ },
+ resched(el){const k=el.dataset.k,to=el.dataset.to==="today"?today():nextFree();setPlanned(k,false);setPlanned(to,true);save();render(true);toast("Moved to "+nice(to)+". The rest of your plan is unchanged.")},
+ skip(el){setPlanned(el.dataset.k,false);save();render(true);toast("Skipped. No guilt, onwards!")},
+ moveTomorrow(){const to=nextFree();setPlanned(today(),false);setPlanned(to,true);save();render();toast("Moved to "+nice(to)+".")},
+ togplan(el){const k=el.dataset.k;if(S.workouts[k]){toast("Already completed ✔");return}setPlanned(k,!planned(k));save();render(true)},
+ /* food */
+ meal(el){T.meal=el.dataset.v;render(true)},
+ fprev(){T.fd=addDays(T.fd||today(),-1);render(true)},
+ fnext(){const n=addDays(T.fd||today(),1);T.fd=n>=today()?null:n;render(true)},
+ qadd(el){const f=FOODS[+el.dataset.i];addFood(f[0]+" ("+f[1]+")",f[2],f[3]);toast("Added "+f[0])},
+ addcustom(){const n=$("#cf_n").value.trim(),c=parseFloat($("#cf_c").value),p=parseFloat($("#cf_p").value)||0;if(!n||!(c>=0)||isNaN(c)){toast("Enter a name and calories.");return}addFood(n,c,p)},
+ del(el){const k=T.fd||today();S.food[k]=(S.food[k]||[]).filter(x=>String(x.id)!==el.dataset.id);save();render(true)},
+ /* coach */
+ cmode(el){T.coach=el.dataset.v;render()},
+ crave(){const v=$("#cin").value.trim();T.cravQ=v;$("#cout").innerHTML=v?cravOut(v):""},
+ cravechip(el){T.cravQ=el.dataset.v;$("#cin").value=el.dataset.v;$("#cout").innerHTML=cravOut(el.dataset.v)},
+ logcrave(el){const c=CRAVE.find(x=>x.id===el.dataset.c),o=c.opts[+el.dataset.o];addFood(o.n,o.kcal,o.p,"Snack");toast("Logged to today: "+o.n)},
+ cook(){const v=$("#kin").value.trim().toLowerCase();T.cookQ=v;const d=DISHES.find(x=>x.k.some(w=>v.includes(w)));if(d){T.dish=d.id;render(true);calcCook()}else toast("Pick a dish from the chips below. More coming soon!")},
+ dish(el){T.dish=el.dataset.v;render(true);calcCook()},
+ logcook(){if(!T.cookLog)return;addFood(T.cookLog.name,T.cookLog.kcal,T.cookLog.p,defMeal());toast("Logged to today: "+R(T.cookLog.kcal)+" kcal, "+R(T.cookLog.p)+" g protein")},
+ /* progress */
+ addw(){const v=parseFloat($("#wkg").value);if(!(v>25&&v<300)){toast("Enter a valid weight in kg.");return}const k=today();S.weights=S.weights.filter(x=>x.d!==k);S.weights.push({d:k,kg:R(v*10)/10});S.weights.sort((a,b)=>a.d<b.d?-1:1);save();render(true);toast("Weight saved ✔")}
+};
+function addFood(name,kcal,p,meal){const k=T.fd||today();const kk=meal?today():k;(S.food[kk]=S.food[kk]||[]).push({id:Date.now()+Math.floor(Math.random()*1000),meal:meal||T.meal||defMeal(),name,kcal:R(kcal),p:R(p*10)/10});save();if(!meal)render(true)}
+
+document.addEventListener("click",e=>{const el=e.target.closest("[data-act]");if(!el)return;if(el.tagName==="INPUT")return;const f=A[el.dataset.act];if(f)f(el)});
+document.addEventListener("change",e=>{
+ const t=e.target;
+ if(t.dataset&&t.dataset.act==="toggleEx"){A.toggleEx(t);return}
+ if(t.id==="cserv"||t.id==="cshare"||t.dataset.ai!==undefined||t.dataset.am!==undefined)calcCook();
+});
+document.addEventListener("input",e=>{
+ const t=e.target;
+ if(t.id==="fq"){$("#fres").innerHTML=foodResults(t.value)}
+ if(t.id==="cserv")calcCook();
+});
+document.addEventListener("keydown",e=>{if(e.key!=="Enter")return;if(e.target.id==="cin")A.crave();if(e.target.id==="kin")A.cook()});
+render();
+})();
+</script>
+</body>
+</html>
